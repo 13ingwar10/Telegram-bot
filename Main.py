@@ -20,29 +20,24 @@ def button_message(message):
     bot.register_next_step_handler(message, register_me)
 
 @bot.message_handler(content_types=['text'])
-
 def register_me(message):
-    if message.text == 'Зарегистрироваться':
+    msg = bot.send_message(message.chat.id, 'Введите Имя')
+    bot.register_next_step_handler(msg, enter_fio)
 
-        new_user = []
-        for element in Create_notebook.list_header:
-            bot.send_message(message.chat.id, f'Заполните поле {element}')
-            bot.message_handler(content_types=['text'])
-            bot.register_next_step_handler(message, fill_new_user)
+def enter_fio(message):
+    new_user = []
+    new_user.append(message.text)
+    msg = bot.send_message(message.chat.id, 'Введите Фамилию')
+    bot.register_next_step_handler(msg, enter_surname, new_user)
 
-            @bot.message_handler(content_types=['text'])
-            def fill_new_user(message):
-                new_user.append(message.text)
+def enter_surname(message, new_user):
+    new_user.append(message.text)
+    msg = bot.send_message(message.chat.id, 'Введите номер телефона')
+    bot.register_next_step_handler(msg, enter_tel, new_user)
 
-
-        # new_user = []
-        # for element in Create_notebook.list_header:
-        #     bot.send_message(message.chat.id, f'Заполните поле {element}')
-        #     @bot.message_handler(content_types=['text'])
-        #     def fill_new_user(message):
-        #         new_user.append(message)
-        # with open('notebook.csv', 'r') as f:
-        #     writer = csv.writer(f, delimiter=';')
-        #     writer.writerow(new_user)
+def enter_tel(message, new_user):
+    new_user.append(message.text)
+    bot.send_message(message.chat.id, 'Регистрация завершена!')
+    print(new_user)
 
 bot.infinity_polling()

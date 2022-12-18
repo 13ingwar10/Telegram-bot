@@ -8,3 +8,4 @@ def create_list():
         with open('notebook.csv', 'w', encoding='utf-8') as el:
             writer = csv.writer(el, delimiter=';')
             writer.writerow(list_header)
+
