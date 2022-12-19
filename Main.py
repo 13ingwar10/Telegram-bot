@@ -41,7 +41,7 @@ def enter_surname(message, new_user):
 
 def enter_tel(message, new_user):
     new_user.append(message.text)
-    bot.send_message(message.chat.id, 'Регистрация завершена!')
+    bot.send_message(message.chat.id, 'Вы успешно приняты!')
 
     with open('notebook.csv', 'a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f, delimiter=';')
